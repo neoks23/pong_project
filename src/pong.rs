@@ -1,5 +1,5 @@
 use amethyst::{
-    assets::{AssetStorage, Loader, Handle},
+    assets::{AssetStorage, Handle, Loader},
     core::transform::Transform,
     ecs::{Component, DenseVecStorage},
     prelude::*,
@@ -14,13 +14,11 @@ pub const PADDLE_WIDTH: f32 = 4.0;
 
 pub struct Pong;
 
-impl SimpleState for Pong{
+impl SimpleState for Pong {
     fn on_start(&mut self, data: StateData<'_, GameData<'_, '_>>) {
         let world = data.world;
 
         let sprite_sheet_handle = load_sprite_sheet(world);
-        
-        world.register::<Paddle>();
         initialise_paddles(world, sprite_sheet_handle);
         initialise_camera(world);
     }
@@ -64,7 +62,6 @@ fn initialise_camera(world: &mut World) {
 }
 /// Initialises one paddle on the left, and one paddle on the right.
 fn initialise_paddles(world: &mut World, sprite_sheet_handle: Handle<SpriteSheet>) {
-
     let mut left_transform = Transform::default();
     let mut right_transform = Transform::default();
 
@@ -73,7 +70,7 @@ fn initialise_paddles(world: &mut World, sprite_sheet_handle: Handle<SpriteSheet
     left_transform.set_translation_xyz(PADDLE_WIDTH * 0.5, y, 0.0);
     right_transform.set_translation_xyz(ARENA_WIDTH - PADDLE_WIDTH * 0.5, y, 0.0);
 
-    let sprite_render = SpriteRender::new(sprite_sheet_handle, 0);      
+    let sprite_render = SpriteRender::new(sprite_sheet_handle, 0);
     // Create a left plank entity.
     world
         .create_entity()
